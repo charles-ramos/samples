@@ -3,7 +3,7 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY background-service/App.WorkerService.csproj ./background-service/
+COPY App.WorkerService.csproj ./background-service/
 RUN dotnet restore "background-service/App.WorkerService.csproj"
 COPY . .
 WORKDIR "/src/background-service"
