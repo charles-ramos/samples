@@ -1,3 +1,4 @@
+
 # See https://aka.ms/containerfastmode to understand how Visual Studio uses this
 # Dockerfile to build your images for faster debugging.
 
@@ -6,7 +7,7 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["background-service/App.WorkerService.csproj", "background-service/"]
+COPY background-service/App.WorkerService.csproj ./background-service/
 RUN dotnet restore "background-service/App.WorkerService.csproj"
 COPY . .
 WORKDIR "/src/background-service"
@@ -16,6 +17,6 @@ FROM build AS publish
 RUN dotnet publish "App.WorkerService.csproj" -c Release -o /app/publish
 
 FROM base AS final
-WORKDIR /app
+WORKDIR /app/publish
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "App.WorkerService.dll"]
